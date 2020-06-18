@@ -1,3 +1,11 @@
+目錄
+
+[網路校時工具 ntp安裝](#網路校時工具-ntp安裝)
+
+[RTC DS3231安裝](#RTC-DS3231安裝)
+
+---
+
 # 網路校時工具 ntp安裝
 
 ## 準備工具 ##
@@ -158,6 +166,8 @@
                 	    install -d ${D}/etc/network/if-up.d
                         install -m 0755 ${S}/staticip_dns_check.sh	${D}/etc/network/if-up.d
                 }
+       
             ``` 
-
+---
+# RTC DS3231安裝
 
