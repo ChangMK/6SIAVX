@@ -90,6 +90,7 @@
 	         install -m 0755 ${S}/ntpd ${D}/${bindir}
              install -d ${D}/etc
              install -m 0755 ${S}/ntp.conf ${D}/etc
+             install -m 0755 ${S}/resolv.conf
     }
     ```
   - __若要檔案安裝於不同的目錄，參數d與m必須為一組使用__    
@@ -115,14 +116,48 @@
         address 10.0.1.110
 	    netmask 255.0.0.0
 	    gateway 10.0.1.101
-
-        # 設定DNS伺服器
-        dns-nameserver 8.8.8.8
-        # 多組DNS伺服器
-        #  dns-nameserver 8.8.8.8 8.8.4.4
     ```
+    - 若使用動態IP則DHCP啓動後，/etc/resolv.conf會被系統填入DNS資訊
+    - 若使用靜態IP則/etc/resolv.conf會是空白，需要自行將DNS資訊填入
+      1. 自行填入的方式為先建立一個resolv.conf.static檔案
+      2. 透過上述do_install的方式放到/etc目錄
+      3. 系統偵測到網路建立連線時會自動執行/etc/network/if-up.d 裡的script file， 所以要寫一個script file 命名為staticip_dns_check.sh
+            ```bash
+                #!/bin/bash
+                # 如果resolv.conf檔為空且有一個resolv.conf.static的檔案
+                # 將resolv.conf.static裡的資料放到resolv.conf裡
+                
+                if [ ! -s /etc/resolv.conf ] && [ -f /etc/resolv.conf.static ]
+                    then
+                        cat /etc/resolv.conf.static > /etc/resolv.conf
+                fi
+            ```
+            reslov.conf.static內容為
+            ```bash
+                    nameserver 8.8.8.8
+                    nameserver 8.8.4.4    
+            ```        
+      4.  利用petalinux建立一個新應用程式
+             ```bash
+                    petalinux-create -t apps --name myapp_init --template install --enable
+            ```
+      5. 編輯`myapp-init.bb`檔，它在\<plnx-proj-root>/project-spec/meta-user/recipes-apps/myapp-init/目錄底下
+            ```bash
+                SUMMARY = "Simple myapp-init application"
+                SECTION = "PETALINUX/apps"
+                LICENSE = "MIT"
+                LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
+                SRC_URI = "file://staticip_dns_check.sh \	
+                "
+                RDEPENDS_${PN} += "bash"
 
+                S = "${WORKDIR}"
 
+                do_install() {
+                	    install -d ${D}/etc/network/if-up.d
+                        install -m 0755 ${S}/staticip_dns_check.sh	${D}/etc/network/if-up.d
+                }
+            ``` 
 
 
