@@ -68,7 +68,7 @@
     - \--template install: 表示使用自行編譯的程式
     - \--template c: 表示使用C語言
   
-  1. 將ntp工具放進\<plnx-proj-root>/ project-spec/meta-user/recipes-apps/ntp/files目錄裡，這裡我只使用ntpd和ntpdate
+  1. 將ntp工具放進/ project-spec/meta-user/recipes-apps/ntp/files目錄裡，這裡我只使用ntpd和ntpdate
   2. ntpd需要額外一個ntp.conf檔內容是放ntp server的位置，將此檔編輯好之後放進上述目錄
       > server tock.stdtime.gov.tw
 
@@ -169,5 +169,3 @@
        
             ``` 
 ---
-# RTC DS3231安裝
-

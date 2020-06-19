@@ -112,7 +112,9 @@
          	     install -m 0755 ${S}/timezone_change.sh ${D}/etc/init.d
          }
         ```
-
+        - INITSCRIPT_PARAMS = "start 01 S . "  : 重新編譯後燒錄啓動，我們就可以在/etc/rcS.d會有一個S01test.sh的鏈接檔案，指向/etc/init.d/test.sh
+        - INITSCRIPT_PARAMS = "defaults 10"  : 在/etc/rc2.d /etc/rc3.d /etc/rc4.d /etc/rc5.d會有一個S10test.sh的鏈接檔案，指向/etc/init.d/test.sh
+        - INITSCRIPT_PARAMS = "start 02 2 3 4 5 . stop 01 0 1 6 ." : 相當於使用defauits
 
 [1]: ./png/vivado_IIC_0.png
 [2]: ./png/vivado_PS.png
