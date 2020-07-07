@@ -49,11 +49,12 @@
         sudo ufw allow 1011
         sudo ufw allow 2049
         ```
-        -從/etc/services可以看出各port作用
-            - 69/udp:tftp
-            - 111: portmap
-            - 1011: mountd
-            - 2049: nfs
+        - 從/etc/services可以看出各port作用
+           - 69/udp:tftp
+           - 111: portmap
+           - 1011: mountd
+           - 2049: nfs
+        - sudo ufw status numbered 可看加入哪些規則
 
 - 設定u-boot掛載NFS
     ```
@@ -66,6 +67,7 @@
     >>>>&nbsp; NFS Server IP address 
     
 ![NFS][1]
+
 - 從設定的tftp目錄裡解壓rootfs.tar.gz到設定的NFS目錄裡    
 - 重新燒錄u-boot至flash或SD卡
 
@@ -92,9 +94,19 @@
 
 # LCD設定方式
 - I2C直接操作
+  - `0x43c0007c 0x00030000` or `slv_reg31[17:16]=2'b11` 表示開背燈 
+  - `0x43c0007c 0x00020000` or `slv_reg31[17:16]=2'b10` 表示關背燈 
+  - `0x43c0007c 0x00000000` or `slv_reg31[17:16]=2'b01` 表示發出reset及開背燈 
+  - `0x43c0007c 0x00000000` or `slv_reg31[17:16]=2'b00` 表示發出reset及關背燈 
+  - `slv_reg31[27]=1` 表示 Init work
+  - `slv_reg31[26]=1` 表示 LCM上指定位置不閃爍
+  - `slv_reg31[24]=1` LCM顯示更新
   - `0x43c0007c 0x10000000` or `slv_reg31[28]=1` 表示要直接透過I2C操作LCD
   - `0x43c00040 0x007C000F` or `slv_reg16` 設定好要透過I2C操作後,透過這個位址或暫存器可以寫入操作命令及資料
     - 7C: LCD的I2C位址
+    -命令模式: `slv_reg16[15:8]=8'h00`
+    -資料模式: `slv_reg16[15:8]=8'h40`
+        -Exapme: 寫入'A' 0x43c00040 0x007C4041
     - MSByte
       - 0x2:游標歸位 
       - 0xF:顯示游標及閃爍目前位置
@@ -102,11 +114,8 @@
       - 0xD:目前位置閃爍
       - 0x80:跳到第一行，向右移一格就加1
       - 0xC0:跳到第二行，向右移一格就加1
-  - `0x43c0007c 0x00030000` or `slv_reg31[25:24]=2'b11` 表示開背燈 
-  - `0x43c0007c 0x00020000` or `slv_reg31[25:24]=2'b10` 表示關背燈 
-  - `0x43c0007c 0x00000000` or `slv_reg31[25:24]=2'b01` 表示發出reset及開背燈 
-  - `0x43c0007c 0x00000000` or `slv_reg31[25:24]=2'b00` 表示發出reset及關背燈 
-
+      - 0xC:顯示螢幕
+      - 0x8:關閉螢幕
 
 
 
