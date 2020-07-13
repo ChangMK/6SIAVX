@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "defines": [],
+            "compilerPath": "/home/mk/DD1/work/xilinx/PetaLinux2019.2/tools/xsct/gnu/aarch32/lin/gcc-arm-none-eabi/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "gcc-arm",
+            "browse": {
+                "path": [
+                    "/home/mk/DD1/work/xilinx/app/front_panel"
+                ]
+            }
+        }
+    ],
+    "version": 4
+}
