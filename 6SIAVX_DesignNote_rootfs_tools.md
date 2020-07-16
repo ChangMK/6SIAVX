@@ -95,9 +95,17 @@
 
 # 開發板上使用NFS
 
- ```
+  - 命令列上  
+
+      ```bash
       mount -t nfs 10.0.1.105:/home/mk/DD1/work/xilinx/6SIAVX/nfsroot nfs -o nolock -v -o nfsvers=3
- ```
+      ```
+
+  - 開機即掛載:在/etc/fstab裡加下面命令
+      
+      ```bash
+      10.0.1.105:/home/mk/DD1/work/xilinx/6SIAVX/opt/GMI /opt/GMI nfs auto,noatime,nolock,bg,nfsvers=3 0 0
+      ``` 
 
 # LCD設定方式
 - I2C直接操作
