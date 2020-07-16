@@ -168,4 +168,7 @@
                 }
        
             ``` 
+       6. 若使用靜態IP，發現之前的設定無法啓用DNS，則在
+meta-plnx-generated/recipes-core/init-ifupdown/files/interfaces最後一行多加一個指令`post-up /etc/network/if-up.d/staticip_dns_check.sh`
+    
 ---

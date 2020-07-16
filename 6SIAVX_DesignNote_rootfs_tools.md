@@ -1,6 +1,7 @@
 - [i2ctools工具安裝](#i2ctools工具安裝)
 - [NFS使用 (ubuntu 16.04)](#nfs使用-ubuntu-1604)
 - [在rootfs下新增自訂目錄](#在rootfs下新增自訂目錄)
+- [開發板上使用NFS](#開發板上使用nfs)
 - [LCD設定方式](#lcd設定方式)
 
 # i2ctools工具安裝
@@ -91,6 +92,12 @@
     }
     ```
     ![addDirectory][2]
+
+# 開發板上使用NFS
+
+ ```
+      mount -t nfs 10.0.1.105:/home/mk/DD1/work/xilinx/6SIAVX/nfsroot nfs -o nolock -v -o nfsvers=3
+ ```
 
 # LCD設定方式
 - I2C直接操作

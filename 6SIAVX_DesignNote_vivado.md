@@ -12,6 +12,7 @@
 設定放IP的目錄，vivado會自動往目錄下找所有的IP
 
 ![][3]
+___
 
 # EMMC使用
 - 在vivado中設定使用EMMC（在picozed裡EMMC是SD1)
@@ -32,7 +33,11 @@
    >> base --->
    >>> e2fsprogs --->
    >>>> [*] e2fsprogs  
-   
+
+   若沒有mkfs指令
+   >>> util-linux --->
+   >>>> [*] util-linux
+
    重新build即可使用   
 
    準備燒錄檔  
@@ -80,7 +85,7 @@
   ```
   tar xvf rootfs.tar.gz -C /run/media/mmcblk0p2 & sync
   ```
-
+___
 
 
 
