@@ -97,20 +97,20 @@
          LICENSE = "MIT"
          LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
          
-         inherit update-rc.d
-         
-         SRC_URI = "file://timezone_change.sh \
-         	"
-         RDEPENDS_${PN} += "bash"
-         
-         S = "${WORKDIR}"
-         INITSCRIPT_PARAMS = "defaults"
-         INITSCRIPT_NAME = "timezone_change.sh"
-         
-         do_install() {
-         	     install -d ${D}/etc/init.d
-         	     install -m 0755 ${S}/timezone_change.sh ${D}/etc/init.d
-         }
+        inherit update-rc.d
+
+        SRC_URI = "file://timezone_change.sh \
+	       "
+        RDEPENDS_${PN} += "bash"
+
+        S = "${WORKDIR}"
+        INITSCRIPT_PARAMS = "defaults 10"
+        INITSCRIPT_NAME = "timezone_change.sh"
+
+        do_install() {
+	        install -d ${D}/etc/init.d
+	        install -m 0755 ${S}/timezone_change.sh ${D}/etc/init.d
+    }
         ```
         - INITSCRIPT_PARAMS = "start 01 S . "  : 重新編譯後燒錄啓動，我們就可以在/etc/rcS.d會有一個S01test.sh的鏈接檔案，指向/etc/init.d/test.sh
         - INITSCRIPT_PARAMS = "defaults 10"  : 在/etc/rc2.d /etc/rc3.d /etc/rc4.d /etc/rc5.d會有一個S10test.sh的鏈接檔案，指向/etc/init.d/test.sh
